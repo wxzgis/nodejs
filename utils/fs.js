@@ -1,4 +1,5 @@
 const fs = require('fs');
+var join = require('path').join;
 
 module.exports = {
     /** 读取文件内容
@@ -55,6 +56,35 @@ module.exports = {
                     reject(err);
                 }else{
                     resolve();
+                }
+            });
+        });
+    },
+
+    fsGetFilesFromDir(dirPath) {
+        dirPath = fs.realpathSync(dirPath);
+        return new Promise((resolve, reject) => {
+            fs.readdir(dirPath, (err, files) => {
+                if(err){
+                    reject(err);
+                }else{
+                    let result = []
+                    files.forEach(file => {
+                        result.push(join(dirPath, file));
+                    });
+                    resolve(result);
+                }
+            })
+        });
+    },
+
+    fsGetFileStat(file){
+        return new Promise((resolve, reject) => {
+            fs.stat(file, (err, stat) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(stat);
                 }
             });
         });

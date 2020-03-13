@@ -13,10 +13,22 @@ let txt3 = './temp/hei.txt'
 //     log(err);
 // });
 
-fsUtils.fsAppend(txt1, '追加你好!write').then(() => {
-    log('ok');
+// fsUtils.fsAppend(txt1, '追加你好!write').then(() => {
+//     log('ok');
+// }).catch(err => {
+//     log('err: ', err);
+// });
+
+fsUtils.fsGetFilesFromDir('./temp').then(result => {
+    log(result);
 }).catch(err => {
-    log('err: ', err);
-});
+    log(err);
+})
+
+// fsUtils.fsGetFileStat(txt3).then(result => {
+//     log(result);
+// }).catch(err => {
+//     log(err);
+// })
 
 
