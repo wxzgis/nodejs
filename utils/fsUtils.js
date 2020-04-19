@@ -1,5 +1,6 @@
 const fs = require('fs');
 var join = require('path').join;
+const iconv = require('iconv-lite');
 
 module.exports = {
     /** 读取文件内容
@@ -46,11 +47,13 @@ module.exports = {
      * @param {String} path 要追加文本的路径，String字符串类型
      * @param {*} val 追加的文本，String字符串类型
      */
-    fsAppend(path, val) {
+    fsAppend(path, val, encoding) {
         return new Promise((resolve, reject) => {
+            if(encoding === 'gbk'){
+                val = iconv.encode(val, 'gbk');
+            }
             fs.writeFile(path, val, {
-                flag: 'a',
-                encoding: 'utf-8'
+                flag: 'a'
             }, err => {
                 if(err){
                     reject(err);
